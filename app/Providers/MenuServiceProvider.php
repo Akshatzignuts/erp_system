@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Menu;
+use App\Models\User;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
 class MenuServiceProvider extends ServiceProvider
 {
     /**
@@ -26,8 +28,11 @@ class MenuServiceProvider extends ServiceProvider
                         ->where('is_delete', 0)
                         ->where('status', 0)
                         ->get();
-   
-            View::share('menu', $menu);
-        
+                         View::composer('*', function ($view) {
+            $view->with('user', Auth::user());
+        });
+            View::share('menu', $menu);   
+           
     }
+    
 }

@@ -1,17 +1,24 @@
 <?php
 use App\Http\Controllers\AuthenticateController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('login');
 })->name('login');
-
 Route::get('/register', function () {
     return view('register');
 })->name('register');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-// Route::post('/menu',[DashboardController::class,'viewMenu'])->name('menu');
+
+
 Route::post('/register',[AuthenticateController::class , 'register'])->name('post.register');
 Route::post('/login',[AuthenticateController::class , 'login'])->name('post.login');
+
+ Route::post('/logout',[AuthenticateController::class, 'logout'])->name('logout');
+Route::middleware('auth:sanctum')->group(function () {
+Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+Route::post('/paid',[AuthenticateController::class , 'paid'])->name('paid');
+//  Route::get('/user',[AuthenticateController::class , 'loggedInUser']);
+}); 

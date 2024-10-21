@@ -48,4 +48,22 @@ class AuthenticateController extends Controller
             return redirect()->back()->with(['success','Invalid credentials']);
         }
     }
+    public function logout(Request $request)
+    {
+        // dd($request);
+        Auth::logout();
+        if(Auth::logout())
+        {
+            return redirect('/');
+        }
+        else
+        {
+            return redirect()->back()->with('message', 'Successfully logged out!');
+        }
+    }
+    public function loggedInUser()
+    {
+        $user = Auth::user();
+        dd($user); 
+    }
 }
