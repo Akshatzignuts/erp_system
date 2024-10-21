@@ -20,7 +20,7 @@
         
         <div class="sidebar">
             @foreach ($menu as $item )
-            <a href="#">
+            <a href="{{ $item->url}}">
                 <span class="material-symbols-outlined"> grid_view </span>
                 <h3>{{$item->menu_name}}</h3>
             </a>    

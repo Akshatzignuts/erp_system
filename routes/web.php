@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,6 +20,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-Route::post('/paid',[AuthenticateController::class , 'paid'])->name('paid');
+Route::get('/paid',[PaymentController::class , 'paid'])->name('paid');
 //  Route::get('/user',[AuthenticateController::class , 'loggedInUser']);
 }); 

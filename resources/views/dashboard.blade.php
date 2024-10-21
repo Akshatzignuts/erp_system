@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +16,7 @@
            
                 <div class="date">
                     <input type="date" id="date" name="date" value="{{ now()->format('Y-m-d') }}">
-                </div>
-              
+                </div>  
             <div class="insights">
                 <div class="sales">
                     <span class="material-symbols-outlined">trending_up</span>
@@ -123,13 +121,13 @@
                     </table>
             </div>
 
-        </main>
+        </main>             
 
         <div class="right">
             @include('common.header')
         </div>
     </div>
     @include('common.footer')
-    <script src="{{  asset('assets/script/script.js')  }}"></script>
+    <script src="{{ asset('assets/script/script.js')  }}"></script>
 </body>
 </html>
