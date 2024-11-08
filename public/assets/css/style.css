@@ -57,7 +57,7 @@ body{
 
 .container{
     display: grid;
-    grid-template-columns: 14rem auto 14rem;
+    grid-template-columns: 14rem auto 0rem;
     width: 96%;
     gap: 1.8rem;
     margin: 0 auto;
@@ -337,14 +337,16 @@ main table tbody td{
 .right{ 
     margin-top: 0.8rem;
     margin-left: -2rem;
+    height: 15%;
+    display: block;
 }
 
-    .right h2{ color: var(--clr-dark);}
+.right h2{ color: var(--clr-dark);}
 
     .right .top{
         display: flex;
         justify-content: start;
-        gap: 2rem;
+        
     }
 
         .right .top button{ display: none;}

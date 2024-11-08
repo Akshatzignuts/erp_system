@@ -10,7 +10,6 @@
 <body>
     <div class="container">
         @include('common.sidebar')
-        
         <main>
             <h1>Dashboard</h1>
            
@@ -121,11 +120,12 @@
                     </table>
             </div>
 
-        </main>             
-
-        <div class="right">
+                
+        </main>
+        {{-- <div class="right">
             @include('common.header')
-        </div>
+        </div> --}}
+         
     </div>
     @include('common.footer')
     <script src="{{ asset('assets/script/script.js')  }}"></script>

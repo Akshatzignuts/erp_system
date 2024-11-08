@@ -21,5 +21,6 @@ Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 Route::get('/paid',[PaymentController::class , 'paid'])->name('paid');
+Route::post('/add/expense',[PaymentController::class , 'addExpense']);
 //  Route::get('/user',[AuthenticateController::class , 'loggedInUser']);
 }); 

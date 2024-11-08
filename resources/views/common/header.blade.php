@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -12,12 +13,12 @@
             <button id="menu-bar">
                 <span class="material-symbols-outlined">menu</span>
             </button>
-        
-        <div class="theme-toggler">
+       
+      <div class="theme-toggler">
             <span class="material-symbols-outlined active">light_mode</span>
             <span class="material-symbols-outlined">dark_mode</span>
         </div>
-        
+         
         <div class="profile">
             <div class="info">
               
