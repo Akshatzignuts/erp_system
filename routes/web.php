@@ -20,7 +20,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-Route::get('/paid',[PaymentController::class , 'paid'])->name('paid');
+ Route::get('/paid',[PaymentController::class , 'viewExpense'])->name('paid');
+// Route::post('/paid/view',[PaymentController::class , 'viewExpense'])->name('paidDisplay');
 Route::post('/add/expense',[PaymentController::class , 'addExpense']);
 //  Route::get('/user',[AuthenticateController::class , 'loggedInUser']);
 }); 

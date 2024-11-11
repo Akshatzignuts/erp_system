@@ -7,6 +7,7 @@
     <link href="{{  asset('assets/css/style.css')  }}" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
+    
 <body>
     <div class="container">
         @include('common.sidebar')     
@@ -57,44 +58,35 @@
                     </form>
                 </div>
             </div>
-    <div class="table-container">
+           
+    <div class="table-container" id= "table-container">
         <h2>Expense Management</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Sr. No</th>
+                    <th>Expense Id</th>
                     <th>Expense Name</th>
                     <th>Type</th>
+                    <th>Description</th>
                     <th>Amount</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th colspan = "2">Action</th>
                 </tr>
             </thead>
             <tbody>
+            
+                @foreach ($expense as $exp)
                 <tr>
-                    <td>1</td>
-                    <td>Office Supplies</td>
-                    <td>Office</td>
-                    <td>$150</td>
-                    <td><span class="status approved">Approved</span></td>
+                    <td>{{ $exp->id }}</td>
+                    <td>{{$exp->name}}</td>
+                    <td>{{$exp->type}}</td>
+                    <td>{{$exp->description}}</td>
+                    <td>{{$exp->amount}}</td>
+                    {{-- <a href="  " id="edit" class="edit-btn">Edit</a> --}}
                     <td><button class="delete-btn">Delete</button></td>
+                
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Software License</td>
-                    <td>IT</td>
-                    <td>$200</td>
-                    <td><span class="status pending">Pending</span></td>
-                    <td><button class="delete-btn">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Marketing Campaign</td>
-                    <td>Marketing</td>
-                    <td>$500</td>
-                    <td><span class="status rejected">Rejected</span></td>
-                    <td><button class="delete-btn">Delete</button></td>
-                </tr>
+                
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -108,6 +100,10 @@
     <script src="{{ asset('assets/script/script.js')  }}"></script>
 </body>
 </html>
+<!-- SweetAlert2 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var modal = document.getElementById("myModal");
@@ -121,6 +117,7 @@
     span.onclick = function() {
         modal.style.display = "none";
     }
+    // $('#edit').on(cli)
 
     $('#expenseForm').submit(function(e) {
             e.preventDefault(); 
@@ -151,23 +148,37 @@
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    // Handle successful form submission (e.g., update the table, show success message)
-                    alert("Expense added successfully!");
-
-                    // Close the modal
                     modal.style.display = "none";
-
-                    // Optionally, update the table dynamically or reload the page
-                    // For example, you can use JavaScript to append a new row to the table.
-
-                    // Reset the form
+                    Swal.fire({
+                    title: 'Role Edited'
+                    , text: 'Expense Added successfully.'
+                    , icon: 'success'
+                    , timer: 1000 // show the popup for 1 seconds
+                    , showConfirmButton: false // don't require user confirmation
+                });
                     $('#expenseForm')[0].reset();
                 },
                 error: function(xhr, status, error) {
-                    // Handle errors if AJAX request fails
-                    alert("An error occurred: " + error);
+                    Swal.fire({
+                    title: 'Error'
+                    , text: 'There was an error in adding Expense.'
+                    , icon: 'error'
+                    , timer: 1000, // show the popup for 1 seconds
+                    showConfirmButton: false // don't require user confirmation
+                });
                 }
             });
+        });
+       
+        var table = $('#table-container').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("paid") }}', 
+            columns: [
+                { data: 'name', name: 'name' },
+                { data: 'email', name: 'email' },
+                { data: 'password', name: 'password' } 
+            ]
         });
 </script>
 <style>
@@ -317,8 +328,14 @@ tr:hover {
     color: white;
 }
 
-.approved {
+.edit-btn {
     background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .pending {
