@@ -113,7 +113,21 @@
         modal.style.display = "none";
     }
     // $('#edit').on(cli)
-
+$(document).ready(function() {
+            var table = $('#table-expense').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("expense") }}', 
+            columns: [
+                { data: 'name', name: 'name' },
+                { data: 'type', name: 'type' },
+                { data: 'description', name: 'description' }, 
+                {data: 'amount' , name: 'amount'},
+                {data: 'date', name: 'date'},
+                {data: 'action', name: 'action'},
+            ]
+        });
+    
     $('#expenseForm').submit(function(e) {
             e.preventDefault(); 
             $.ajaxSetup({
@@ -144,6 +158,7 @@
                 data: formData,
                 success: function(response) {
                     modal.style.display = "none";
+                    table.ajax.reload(); 
                     Swal.fire({
                     title: 'Role Edited'
                     , text: 'Expense Added successfully.'
@@ -164,21 +179,7 @@
                 }
             });
         });
-        $(document).ready(function() {
-            var table = $('#table-expense').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route("expense") }}', 
-            columns: [
-                { data: 'name', name: 'name' },
-                { data: 'type', name: 'type' },
-                { data: 'description', name: 'description' }, 
-                {data: 'amount' , name: 'amount'},
-                {data: 'date', name: 'date'},
-                {data: 'action', name: 'action'},
-            ]
-        });
-    });
+    });   
      
 </script>
 <style>
@@ -288,49 +289,112 @@ textarea {
 }
 
 
-.table-container {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-top: 35px;
-}
 
 h2 {
     text-align: center;
     color: #333;
 }
 
+/* Overall Container */
+.table-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 35px;
+    max-width: 100%;
+}
+
+/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin-top: 20px;
-}
-#table-expense td {
-   
-    border: 1px solid #ddd; /* Add a border to the data cells */
 }
 
 th, td {
-  
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    padding: 12px 20px;
+    border: 1px solid #e1e1e1;
+    font-size: 14px;
 }
 
 th {
     background-color: #007bff;
     color: white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 15px;
 }
 
-tr:hover {
+/* Table Data */
+td {
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+td:hover {
     background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
 }
 
-.status {
-    padding: 5px 10px;
-    border-radius: 4px;
+/* Row Hover */
+tr:hover {
+    background-color: #f3faff;
+}
+
+/* Action Buttons */
+.edit-btn, .delete-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.edit-btn {
+    background-color: #28a745;
+    color: white;
+    margin-right: 5px;
+}
+
+.edit-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.delete-btn {
+    background-color: #dc3545;
     color: white;
 }
+
+.delete-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+/* Table Title */
+h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+
 
 .edit-btn {
     background-color: #28a745;
