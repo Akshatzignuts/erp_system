@@ -21,6 +21,7 @@
                     <button id="add" class="btn btn-primary">Add</button>
                 </div> 
             </div>
+            
             <div id="myModal" class="modal">
                 <div class="modal-content">
                     <span id="close" class="close">&times;</span>
@@ -61,7 +62,7 @@
            
     <div class="table-container" id= "table-container">
         <h2>Expense Management</h2>
-        <table>
+        <table id="table-expense" style="border: 1;">
             <thead>
                 <tr>
                     <th>Expense Id</th>
@@ -69,24 +70,12 @@
                     <th>Type</th>
                     <th>Description</th>
                     <th>Amount</th>
-                    <th colspan = "2">Action</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
             
-                @foreach ($expense as $exp)
-                <tr>
-                    <td>{{ $exp->id }}</td>
-                    <td>{{$exp->name}}</td>
-                    <td>{{$exp->type}}</td>
-                    <td>{{$exp->description}}</td>
-                    <td>{{$exp->amount}}</td>
-                    {{-- <a href="  " id="edit" class="edit-btn">Edit</a> --}}
-                    <td><button class="delete-btn">Delete</button></td>
-                
-                </tr>
-                
-                @endforeach
+
             </tbody>
         </table>
     </div>
@@ -101,11 +90,17 @@
 </body>
 </html>
 <!-- SweetAlert2 CDN -->
+
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
+
+
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("add");
     var span = document.getElementById("close"); 
@@ -169,17 +164,22 @@
                 }
             });
         });
-       
-        var table = $('#table-container').DataTable({
+        $(document).ready(function() {
+            var table = $('#table-expense').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ route("paid") }}', 
+            ajax: '{{ route("expense") }}', 
             columns: [
                 { data: 'name', name: 'name' },
-                { data: 'email', name: 'email' },
-                { data: 'password', name: 'password' } 
+                { data: 'type', name: 'type' },
+                { data: 'description', name: 'description' }, 
+                {data: 'amount' , name: 'amount'},
+                {data: 'date', name: 'date'},
+                {data: 'action', name: 'action'},
             ]
         });
+    });
+     
 </script>
 <style>
 form {
@@ -306,10 +306,14 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
 }
+#table-expense td {
+   
+    border: 1px solid #ddd; /* Add a border to the data cells */
+}
 
 th, td {
-    padding: 12px;
-    text-align: left;
+  
+    text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
